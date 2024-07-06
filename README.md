@@ -1,70 +1,83 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# WAA University Connect UI
 
-## Available Scripts
+This is the frontend user interface for the WAA University Connect application, built with React, Material-UI, and TailwindCSS.
 
-In the project directory, you can run:
+## Project Setup
 
-### `npm start`
+### Prerequisites
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Make sure you have the following installed on your local development machine:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- [Node.js](https://nodejs.org/en/download/) (version 14 or higher)
+- [npm](https://www.npmjs.com/get-npm) (version 6 or higher) - npm is installed with Node.js
 
-### `npm test`
+### Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. **Clone the repository:**
 
-### `npm run build`
+   \`\`\`bash
+   git clone <repository-url>
+   cd waa-university-connect-ui
+   \`\`\`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. **Install dependencies:**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   \`\`\`bash
+   npm install
+   \`\`\`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Running the Application
 
-### `npm run eject`
+To start the development server, run:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+\`\`\`bash
+npm start
+\`\`\`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+This will start the application on \`http://localhost:3000\`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Building the Application
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+To create a production build of the application, run:
 
-## Learn More
+\`\`\`bash
+npm run build
+\`\`\`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This will generate a \`build\` directory containing the production build of the application.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Testing the Application
 
-### Code Splitting
+To run tests, use the following command:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+\`\`\`bash
+npm test
+\`\`\`
 
-### Analyzing the Bundle Size
+### Project Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- \`src/\` - The source code of the application.
+- \`public/\` - The public directory contains the HTML file so you can tweak it, but you mostly don’t need to touch this file.
+- \`src/components/\` - Contains React components.
+- \`src/index.js\` - The entry point of the application.
+- \`src/App.js\` - The root component of the application.
 
-### Making a Progressive Web App
+### Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- **TailwindCSS**: Configuration is located in \`tailwind.config.js\`.
+- **PostCSS**: Configuration is located in \`postcss.config.js\`.
 
-### Advanced Configuration
+### Dependencies
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- **React** (version 18.3.1): A JavaScript library for building user interfaces.
+- **Material-UI** (version 5.16.0): React components for faster and easier web development.
+- **TailwindCSS** (version 3.4.4): A utility-first CSS framework.
+- **React Router DOM** (version 6.24.1): Declarative routing for React applications.
 
-### Deployment
+### Development Scripts
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **\`npm start\`**: Starts the development server.
+- **\`npm run build\`**: Bundles the app into static files for production.
+- **\`npm test\`**: Starts the test runner.
+- **\`npm run eject\`**: Removes this tool and copies build dependencies, configuration files, and scripts into the app directory. If you do this, you can’t go back!
