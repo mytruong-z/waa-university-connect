@@ -13,6 +13,7 @@ import ThreadList from './components/front/thread/ThreadList';
 import ThreadDetail from './components/front/thread/ThreadDetail';
 import UserDashboard from './components/front/dashboard/UserDashboard';
 import ManageThreads from './components/front/dashboard/ManageThreads';
+import Register from "./components/front/Register";
 
 function App() {
   return (
@@ -55,6 +56,7 @@ const FrontLayout = () => (
       <Route path="/threads" element={<ThreadList />} />
       <Route path="/threads/:threadId" element={<ThreadDetail />} /> 
       <Route path="/dashboard" element={<UserDashboard />} />
+      <Route path="/register" element={<Register />} />
       <Route path="/manage/threads" element={<ManageThreads />} />
     </Routes>
   </Box>
