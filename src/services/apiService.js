@@ -35,3 +35,11 @@ export const getUserById = (id) => api.get(`/users/${id}`);
 export const createUser = (user) => api.post('/users', user);
 export const updateUser = (id, user) => api.put(`/users/${id}`, user);
 export const deleteUser = (id) => api.delete(`/users/${id}`);
+
+// Surveys
+export const getAllSurveysByUser = (userId) => api.get(`/surveys?creator_id=${userId}`);
+export const getAllSurveys = (userId) => api.get(`/surveys?`);
+export const getSurveyById = (id) => api.get(`/surveys/${id}`);
+export const createSurvey = (survey) => api.post('/surveys', survey);
+export const updateSurvey = (id, survey) => api.put(`/surveys/${id}`, survey);
+export const deleteSurvey = (id) => api.delete(`/surveys/${id}`);

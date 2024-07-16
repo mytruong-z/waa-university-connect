@@ -58,6 +58,7 @@ const ManageThreads = () => {
           console.error('There was an error updating the thread!', error);
         });
     } else {
+      updatedThread.id = threads.length + 1;
       createThread(updatedThread)
         .then(() => {
           fetchThreads();
@@ -69,8 +70,10 @@ const ManageThreads = () => {
     }
   };
 
-  const handleDelete = (id) => {
-    deleteThread(id)
+  const handleDelete = (thread) => {
+    console.log('Deleting thread:', thread);
+
+    deleteThread(thread.id)
       .then(() => {
         fetchThreads();
       })
@@ -105,7 +108,7 @@ const ManageThreads = () => {
                 <TableCell align="right">{thread.createdBy.username}</TableCell>
                 <TableCell align="right">
                   <Button variant="contained" color="primary" onClick={() => handleOpen(thread)} sx={{ marginRight: 1 }}>Edit</Button>
-                  <Button variant="contained" color="error" onClick={() => handleDelete(thread.id)}>Delete</Button>
+                  <Button variant="contained" color="error" onClick={() => handleDelete(thread)}>Delete</Button>
                 </TableCell>
               </TableRow>
             ))}
