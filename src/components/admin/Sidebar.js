@@ -8,6 +8,7 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import EventIcon from '@mui/icons-material/Event';
 import ThreadIcon from '@mui/icons-material/Article';
 import SchoolIcon from '@mui/icons-material/School';
+import MoodIcon from '@mui/icons-material/Mood';
 
 const Sidebar = () => {
   return (
@@ -33,7 +34,8 @@ const Sidebar = () => {
             { text: 'Resources', icon: <LibraryBooksIcon />, path: '/admin/resources' },
             { text: 'Events', icon: <EventIcon />, path: '/admin/events' },
             { text: 'Threads', icon: <ThreadIcon />, path: '/admin/threads' },
-            { text: 'Students', icon: <SchoolIcon />, path: '/admin/students' }, // Add this line
+            { text: 'Students', icon: <SchoolIcon />, path: '/admin/students' },
+            { text: 'Surveys', icon: <MoodIcon />, path: '/admin/surveys' },
           ].map((item) => (
             <ListItem button key={item.text} component={Link} to={item.path}>
               <ListItemIcon sx={{ color: '#fff' }}>{item.icon}</ListItemIcon>

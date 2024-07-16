@@ -7,6 +7,7 @@ import Home from './components/front/Home';
 import About from './components/front/About';
 import Threads from './components/admin/Threads';
 import Posts from './components/admin/Posts';
+import Surveys from './components/admin/Surveys';
 import Header from './components/front/Header';
 import ThreadList from './components/front/thread/ThreadList';
 import ThreadDetail from './components/front/thread/ThreadDetail';
@@ -38,6 +39,7 @@ const AdminLayout = () => (
         <Route path="/" element={<AdminDashboard />} />
         <Route path="threads" element={<Threads />} />
         <Route path="threads/:threadId/posts" element={<Posts />} />
+        <Route path="surveys" element={<Surveys />} />
         {/* Add more admin routes here */}
       </Routes>
     </Box>
