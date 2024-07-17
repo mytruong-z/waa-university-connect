@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3001';
+const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:8080/api/v1';
+
 
 // Axios instance
 const api = axios.create({
@@ -9,6 +10,20 @@ const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
+
+api.interceptors.request.use(
+  (req) => {
+    const token = localStorage.getItem('token');
+    console.log('Token: ', token);
+    if (token) {
+      req.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return req;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 // Threads
 export const getAllThreads = () => api.get('/threads');
@@ -35,3 +50,6 @@ export const getUserById = (id) => api.get(`/users/${id}`);
 export const createUser = (user) => api.post('/users', user);
 export const updateUser = (id, user) => api.put(`/users/${id}`, user);
 export const deleteUser = (id) => api.delete(`/users/${id}`);
+
+// Login
+export const loginToServer = (user) => api.post('auth/login', user);
