@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3001';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080/api/v1';
+
 
 // Axios instance
 const api = axios.create({
@@ -9,6 +10,20 @@ const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
+
+api.interceptors.request.use(
+  (req) => {
+    const token = localStorage.getItem('token');
+    console.log('Token: ', token);
+    if (token) {
+      req.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return req;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 // Threads
 export const getAllThreads = () => api.get('/threads');
@@ -43,3 +58,13 @@ export const getSurveyById = (id) => api.get(`/surveys/${id}`);
 export const createSurvey = (survey) => api.post('/surveys', survey);
 export const updateSurvey = (id, survey) => api.put(`/surveys/${id}`, survey);
 export const deleteSurvey = (id) => api.delete(`/surveys/${id}`);
+
+// Login
+export const loginToServer = (user) => api.post('auth/login', user);
+
+// Resources
+export const getAllResourcesFromServer = () => api.get('/resources');
+export const getResourceByIdFromServer = (id) => api.get(`/resources/${id}`);
+export const createResourceToServer = (resource) => api.post('/resources', resource);
+export const updateResourceToServer = (id, resource) => api.put(`/resources/${id}`, resource);
+export const deleteResourceToServer = (id) => api.delete(`/resources/${id}`);
