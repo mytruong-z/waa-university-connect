@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080';
-
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080/api/v1';
 // Axios instance
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -9,6 +8,20 @@ const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
+
+api.interceptors.request.use(
+  (req) => {
+    const token = localStorage.getItem('token');
+    console.log('Token: ', token);
+    if (token) {
+      req.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return req;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 // Threads
 export const getAllThreads = () => api.get('/threads');
@@ -44,7 +57,6 @@ export const createSurvey = (survey) => api.post('/surveys', survey);
 export const updateSurvey = (id, survey) => api.put(`/surveys/${id}`, survey);
 export const deleteSurvey = (id) => api.delete(`/surveys/${id}`);
 
-
 //student registration
 export const registerStudent = (student) => api.post('/api/v1/register', student);
 export const getStudent = () =>  api.get('/api/v1/register/617503');
@@ -59,3 +71,12 @@ export const deleteEvent = (id) =>  api.delete(`/api/v1/events/${id}`);
 //Events Admin
 export const getAllEvents = () =>  api.get(`/api/v1/admin/events`);
 export const approveEvent = (id) =>  api.delete(`/api/v1/admin/events/${id}/approve`);
+// Login
+export const loginToServer = (user) => api.post('auth/login', user);
+
+// Resources
+export const getAllResourcesFromServer = () => api.get('/resources');
+export const getResourceByIdFromServer = (id) => api.get(`/resources/${id}`);
+export const createResourceToServer = (resource) => api.post('/resources', resource);
+export const updateResourceToServer = (id, resource) => api.put(`/resources/${id}`, resource);
+export const deleteResourceToServer = (id) => api.delete(`/resources/${id}`);
