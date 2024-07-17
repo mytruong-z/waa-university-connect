@@ -19,12 +19,13 @@ import { Container, TextField, Button, Typography } from '@mui/material';
 import { useAuth, AuthProvider } from './context/authContext';
 import UserLoginPage from './pages/UserLoginPage';
 import AdminLoginPage from './pages/AdminLoginPage';
+import ResourceManagementPage from './pages/ResourceManagementPage';
 
 function App() {
   return (
     <Router>
       <AuthProvider>
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex', height: '100%' }}>
           <CssBaseline />
           <Routes>
 
@@ -66,13 +67,14 @@ const AdminLayout = () => (
     <Sidebar />
     <Box
       component="main"
-      sx={{ flexGrow: 1, bgcolor: '#e3f2fd', p: 3 }}
+      sx={{ flexGrow: 1, bgcolor: '#e3f2fd', p: 3, height: '100%' }}
     >
       <Routes>
         <Route path="/" element={<AdminDashboard />} />
         <Route path="threads" element={<Threads />} />
         <Route path="threads/:threadId/posts" element={<Posts />} />
         <Route path="surveys" element={<Surveys />} />
+        <Route path="/resources" element={<ResourceManagementPage />} />
         {/* Add more admin routes here */}
       </Routes>
     </Box>

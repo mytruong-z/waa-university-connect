@@ -61,3 +61,10 @@ export const deleteSurvey = (id) => api.delete(`/surveys/${id}`);
 
 // Login
 export const loginToServer = (user) => api.post('auth/login', user);
+
+// Resources
+export const getAllResourcesFromServer = () => api.get('/resources');
+export const getResourceByIdFromServer = (id) => api.get(`/resources/${id}`);
+export const createResourceToServer = (resource) => api.post('/resources', resource);
+export const updateResourceToServer = (id, resource) => api.put(`/resources/${id}`, resource);
+export const deleteResourceToServer = (id) => api.delete(`/resources/${id}`);
