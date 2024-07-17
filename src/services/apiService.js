@@ -1,8 +1,6 @@
 import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080/api/v1';
-
-
 // Axios instance
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -59,6 +57,20 @@ export const createSurvey = (survey) => api.post('/surveys', survey);
 export const updateSurvey = (id, survey) => api.put(`/surveys/${id}`, survey);
 export const deleteSurvey = (id) => api.delete(`/surveys/${id}`);
 
+//student registration
+export const registerStudent = (student) => api.post('/api/v1/register', student);
+export const getStudent = () =>  api.get('/api/v1/register/617503');
+
+//Events Student
+export const getStudentEvents = (studentId) =>  api.get(`/api/v1/students/events/${studentId}`);
+export const getEventById = (id) =>  api.get(`/api/v1/events/${id}`);
+export const createEvent = (event) =>  api.post(`/api/v1/events`,event);
+export const updateEvent = (id,event) =>  api.put(`/api/v1/events/${id}`,event);
+export const deleteEvent = (id) =>  api.delete(`/api/v1/events/${id}`);
+
+//Events Admin
+export const getAllEvents = () =>  api.get(`/api/v1/admin/events`);
+export const approveEvent = (id) =>  api.delete(`/api/v1/admin/events/${id}/approve`);
 // Login
 export const loginToServer = (user) => api.post('auth/login', user);
 

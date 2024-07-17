@@ -13,6 +13,8 @@ import ThreadList from './components/front/thread/ThreadList';
 import ThreadDetail from './components/front/thread/ThreadDetail';
 import UserDashboard from './components/front/dashboard/UserDashboard';
 import ManageThreads from './components/front/dashboard/ManageThreads';
+import Register from "./components/front/Register";
+import ManageEvents from "./components/front/dashboard/ManageEvents";
 
 import { useNavigate } from 'react-router-dom';
 import { Container, TextField, Button, Typography } from '@mui/material';
@@ -90,7 +92,9 @@ const FrontLayout = () => (
       <Route path="/threads" element={<ThreadList />} />
       <Route path="/threads/:threadId" element={<ThreadDetail />} />
       <Route path="/dashboard" element={<UserDashboard />} />
+      <Route path="/register" element={<Register />} />
       <Route path="/manage/threads" element={<ManageThreads />} />
+      <Route path="/manage/events" element={<ManageEvents />} />
     </Routes>
   </Box>
 );
