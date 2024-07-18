@@ -81,3 +81,7 @@ npm test
 - **`npm run build`**: Bundles the app into static files for production.
 - **`npm test`**: Starts the test runner.
 - **`npm run eject`**: Removes this tool and copies build dependencies, configuration files, and scripts into the app directory. If you do this, you can’t go back!
+
+
+#### Records Team 2
+* [Thi Ngoc My Truong](https://drive.google.com/file/d/14OyOPZYQ6aHQJIa9Cc988DO3P-bf-KBM/view?usp=sharing)
