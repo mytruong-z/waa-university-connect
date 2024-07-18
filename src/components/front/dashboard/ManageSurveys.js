@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, MenuItem, FormControl, InputLabel, Select } from '@mui/material';
 import { getAllSurveysByUser, createSurvey, updateSurvey, deleteSurvey } from '../../../services/apiService';
 import { useUser } from '../../../context/UserContext';
@@ -123,17 +123,6 @@ const ManageSurveys = () => {
             value={currentSurvey.description}
             onChange={(e) => setCurrentSurvey({ ...currentSurvey, description: e.target.value })}
           />
-          <FormControl fullWidth margin="dense">
-            <InputLabel>Status</InputLabel>
-            <Select
-              value={currentSurvey.status}
-              onChange={(e) => setCurrentSurvey({ ...currentSurvey, status: e.target.value })}
-              label="Status"
-            >
-              <MenuItem value="ACTIVE">Active</MenuItem>
-              <MenuItem value="INACTIVE">Inactive</MenuItem>
-            </Select>
-          </FormControl>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

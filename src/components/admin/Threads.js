@@ -28,7 +28,7 @@ const Threads = () => {
   const handleDelete = (id) => {
     deleteThread(id)
       .then(() => {
-        fetchThreads(); // Reload the list after deletion
+        fetchThreads();
       })
       .catch(error => {
         console.error('There was an error deleting the thread!', error);

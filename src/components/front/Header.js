@@ -41,7 +41,7 @@ const Header = () => {
           onClose={handleClose}
         >
           <MenuItem onClick={handleClose} component={Link} to="/account">Account</MenuItem>
-          <MenuItem onClick={handleClose} component={Link} to="/survey">Surveys</MenuItem>
+          <MenuItem onClick={handleClose} component={Link} to="/surveys">Surveys</MenuItem>
           <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
       </Toolbar>
