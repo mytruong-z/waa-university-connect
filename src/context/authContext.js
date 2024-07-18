@@ -18,6 +18,8 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (token, admin = false) => {
+    debugger;
+    console.log("inside authContext : " + token)
     setIsAuthenticated(true);
     setIsAdmin(admin);
     localStorage.setItem('token', token);

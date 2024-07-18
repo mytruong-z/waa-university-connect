@@ -22,6 +22,12 @@ import { useAuth, AuthProvider } from './context/authContext';
 import UserLoginPage from './pages/UserLoginPage';
 import AdminLoginPage from './pages/AdminLoginPage';
 import ResourceManagementPage from './pages/ResourceManagementPage';
+import Events from "./components/admin/Events";
+import EventDetails from "./components/front/dashboard/EventDetails";
+import EventThread from "./components/front/dashboard/EventThread";
+import UpcomingEvents from "./components/front/dashboard/UpcomingEvents";
+import RunningEvents from "./components/front/dashboard/RunningEvents";
+import Students from "./components/admin/Students";
 
 function App() {
   return (
@@ -77,6 +83,8 @@ const AdminLayout = () => (
         <Route path="threads/:threadId/posts" element={<Posts />} />
         <Route path="surveys" element={<Surveys />} />
         <Route path="/resources" element={<ResourceManagementPage />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/students" element={<Students />} />
         {/* Add more admin routes here */}
       </Routes>
     </Box>
@@ -94,7 +102,11 @@ const FrontLayout = () => (
       <Route path="/dashboard" element={<UserDashboard />} />
       <Route path="/register" element={<Register />} />
       <Route path="/manage/threads" element={<ManageThreads />} />
-      <Route path="/manage/events" element={<ManageEvents />} />
+      <Route path="/manage/events" element={<EventThread />} />
+      <Route path="/events/my" element={<ManageEvents />} />
+      <Route path="/upcoming/events" element={<UpcomingEvents />} />
+      <Route path="/running/events" element={<RunningEvents />} />
+      <Route path="/event-details/:id" element={<EventDetails />} />
     </Routes>
   </Box>
 );

@@ -9,14 +9,23 @@ const api = axios.create({
   },
 });
 
+const loginapi = axios.create({
+    baseURL: API_BASE_URL,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
+
+// export const loginToServer = (user) => loginapi.post('/auth/login', user);
+
 api.interceptors.request.use(
   (req) => {
     const token = localStorage.getItem('token');
     console.log('Token: ', token);
     if (token) {
-      req.headers['Authorization'] = `Bearer ${token}`;
+        req.headers['Authorization'] = `Bearer ${token}`;
+        return req;
     }
-    return req;
   },
   (error) => {
     return Promise.reject(error);
@@ -58,21 +67,39 @@ export const updateSurvey = (id, survey) => api.put(`/surveys/${id}`, survey);
 export const deleteSurvey = (id) => api.delete(`/surveys/${id}`);
 
 //student registration
-export const registerStudent = (student) => api.post('/api/v1/register', student);
-export const getStudent = () =>  api.get('/api/v1/register/617503');
+export const registerStudent = (student) => api.post('/register', student);
+export const getStudent = () =>  api.get('/register/617503');
 
-//Events Student
-export const getStudentEvents = (studentId) =>  api.get(`/api/v1/students/events/${studentId}`);
-export const getEventById = (id) =>  api.get(`/api/v1/events/${id}`);
-export const createEvent = (event) =>  api.post(`/api/v1/events`,event);
-export const updateEvent = (id,event) =>  api.put(`/api/v1/events/${id}`,event);
-export const deleteEvent = (id) =>  api.delete(`/api/v1/events/${id}`);
+//Students
+export const getAllStudents = () =>  api.get(`/admin/students`);
+export const approveStudent = (studentId) =>  api.put(`/admin/student/approve/${studentId}`);
+
+//Events
+export const getUserEvents = (filterDto) =>  {
+    return api.get(`/events/my`,{ params: filterDto});
+};
+export const getEventById = (id) =>  api.get(`/events/${id}`);
+export const createEvent = (event) =>  api.post(`/events`,event);
+export const updateEvent = (id,event) =>  api.put(`/events/${id}`,event);
+export const deleteEvent = (id) =>  api.delete(`/events/${id}`);
+export const startEvent = (id) =>  api.put(`/events/${id}/status`,'STARTED');
+export const stopEvent = (id) =>  api.put(`/events/${id}/status`,'CLOSED');
+export const getUpcomingEvents = () =>  api.get(`/events/upcoming-events`);
+export const getRunningEvents = () =>  api.get(`/events/running-events`);
+export const joinEvent = (eventId) =>  api.post(`/events/${eventId}/join-event`);
+export const getEventAttendance = (eventId) =>  api.get(`/events/${eventId}/attendance`);
+export const getLiveMessage = (eventId) =>  api.get(`/live-message/${eventId}`);
+export const saveLiveMessage = (message) =>  api.post(`/live-message`,message);
 
 //Events Admin
-export const getAllEvents = () =>  api.get(`/api/v1/admin/events`);
-export const approveEvent = (id) =>  api.delete(`/api/v1/admin/events/${id}/approve`);
+export const getAllEvents = (filter) =>  {
+    console.log(filter);
+    return api.get(`/admin/events`,{ params: filter});
+}
+export const approveEvent = (id) =>  api.put(`/admin/events/${id}/approve`);
+
 // Login
-export const loginToServer = (user) => api.post('auth/login', user);
+export const loginToServer = (user) => loginapi.post('/auth/login', user);
 
 // Resources
 export const getAllResourcesFromServer = () => api.get('/resources');
