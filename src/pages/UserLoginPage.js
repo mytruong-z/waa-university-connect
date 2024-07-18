@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, TextField, Button, Typography, Box, Paper, Avatar } from '@mui/material';
+import { Container, TextField, Button, Typography, Box, Paper, Avatar, Alert } from '@mui/material';
 import { useAuth } from '../context/authContext';
 import { loginToServer } from '../services/apiService';
 import { LockOutlined as LockOutlinedIcon } from '@mui/icons-material';
@@ -10,6 +10,7 @@ const UserLoginPage = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const { login } = useAuth();
+  const [error, setError] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -21,6 +22,7 @@ const UserLoginPage = () => {
       navigate('/');
     }).catch((error) => {
       console.error('There was an error logging in!', error);
+      setError('Login failed. Please check your username and password.');
     });
   };
 
@@ -48,6 +50,11 @@ const UserLoginPage = () => {
           <Typography component="h1" variant="h5">
             User Login to University Forum
           </Typography>
+        {error && (
+          <Alert severity="error" sx={{ mt: 2 }}>
+            {error}
+          </Alert>
+        )}
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
               margin="normal"
