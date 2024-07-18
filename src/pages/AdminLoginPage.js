@@ -12,10 +12,8 @@ const AdminLoginPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Implement your authentication logic here
+    debugger;
     loginToServer({ email: username, password }).then((res) => {
-      console.log(res);
-
       login(res.data.data.accessToken, true); // Set admin to true
       navigate('/admin');
     }).catch((error) => {

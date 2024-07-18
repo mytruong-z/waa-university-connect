@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
-import { getStudentEvents, deleteEvent, updateEvent, createEvent } from '../../../services/apiService';
-import { useUser } from '../../../context/UserContext'; // Ensure this is correctly imported
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-// import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import {deleteEvent, updateEvent, createEvent, getUserEvents} from '../../../services/apiService';
+import { useUser } from '../../../context/UserContext';
+import { Link } from 'react-router-dom';
+
 
 const ManageEvents = () => {
   const { user } = useUser();
@@ -12,12 +11,11 @@ const ManageEvents = () => {
   const [currentEvent, setCurrentEvent] = useState({id: null, title: '', description: '', eventDateTime: null, status: null, createdOn: null, publishedOn: null});
 
   const [open, setOpen] = useState(false);
-  const studentId="617502";
   const fetchEvents = useCallback(() => {
     if (user) {
-      getStudentEvents(studentId)
+      getUserEvents()
         .then(response => {
-          setEvents(response.data);
+            setEvents(response.data.data);
         })
         .catch(error => {
           console.error('There was an error fetching the events!', error);
@@ -30,7 +28,7 @@ const ManageEvents = () => {
     fetchEvents();
   }, [fetchEvents]);
 
-  const handleOpen = (event = {id: null, title: '', description: '', eventDateTime: null, status: null, createdOn: null, publishedOn: null}) => {
+  const handleOpen = (event={id:null,title:'',description:'',eventDateTime: null}) => {
     setCurrentEvent(event);
     setOpen(true);
   };
@@ -39,46 +37,60 @@ const ManageEvents = () => {
     setOpen(false);
   };
 
+    const handleEventOpen = (event) => {
+        setCurrentEvent(event);
+        setOpen(true);
+    };
+
   const handleDelete = (event) => {
-    console.log('Deleting event:', event);
     deleteEvent(event.id)
         .then(() => {
+            alert('event deleted successfully..!!');
           fetchEvents();
         })
         .catch(error => {
-          console.error('There was an error deleting the event!', error);
+            if(error.response.data.message){
+                alert(error.response.data.message);
+            }
+            else{
+                alert('something went wrong!!')
+            }
         });
   };
 
   const handleSave = () => {
-    // const updatedEvent = { ...currentEvent, discussionCategory: categories.find(cat => cat.id === currentThread.discussionCategory.id) };
+      console.log(currentEvent);
     if (currentEvent.id) {
       updateEvent(currentEvent.id, currentEvent)
           .then(() => {
+              alert('event updated successfully..!!')
             fetchEvents();
             handleClose();
           })
           .catch(error => {
-            console.error('There was an error updating the event!', error);
+              console.log(error)
+              if(error.response.data.message){
+                  alert(error.response.data.message);
+              }
+              else{
+                  alert('something went wrong!!')
+              }
           });
     } else {
       createEvent(currentEvent)
           .then(() => {
+            alert('event created successfully..!!')
             fetchEvents();
             handleClose();
           })
           .catch(error => {
-            console.error('There was an error creating the event!', error);
+              if(error.response.message){
+                  alert(error.response.message);
+              }
+             // console.error('There was an error creating the event!', error);
           });
     }
   };
-
-    const handleDateChange = (newValue) => {
-        setCurrentEvent((prevState) => ({
-            ...prevState,
-            eventDateTime: newValue,
-        }));
-    };
 
   const onValueChange=(e) => setCurrentEvent({ ...currentEvent, [e.target.name]: e.target.value });
 
@@ -94,27 +106,38 @@ const ManageEvents = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
+              <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>S.N.</TableCell>
               <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Title</TableCell>
-              <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }} align="right">Description</TableCell>
               <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }} align="right">Event Datetime</TableCell>
-              <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }} align="right">Created On</TableCell>
-              <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }} align="right">Published On</TableCell>
+              <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }} align="right">Created By</TableCell>
               <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }} align="right">Status</TableCell>
               <TableCell sx={{ fontWeight: 'bold', fontSize: '1.1rem' }} align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {events.map((item) => (
+            {events.map((item,index) => (
               <TableRow key={item.id}>
+                <TableCell>{index+1}</TableCell>
                 <TableCell>{item.title}</TableCell>
-                <TableCell align="right">{item.description}</TableCell>
                 <TableCell align="right">{item.eventDateTime}</TableCell>
-                <TableCell align="right">{item.createdOn}</TableCell>
-                <TableCell align="right">{item.publishedOn}</TableCell>
+                <TableCell align="right">{item.createdBy.firstName + " " + item.createdBy.lastName}</TableCell>
                 <TableCell align="right">{item.status}</TableCell>
                 <TableCell align="right">
-                  <Button variant="contained" color="primary" onClick={() => handleOpen(item)} sx={{ marginRight: 1 }}>Edit</Button>
-                  <Button variant="contained" color="error" onClick={() => handleDelete(item)}>Delete</Button>
+                    {item.status === 'DRAFT' && (
+                        <>
+                            <Button variant="contained" color="primary" onClick={() => handleOpen(item)} sx={{ marginLeft: 1 }}>
+                                Edit
+                            </Button>
+                            <Button variant="contained" color="error" onClick={() => handleDelete(item)} sx={{ marginLeft: 1 }}>
+                                Delete
+                            </Button>
+                        </>
+                    )}
+
+                    <Button variant="contained" color="inherit" target="_blank" rel="noopener noreferrer"
+                            component={Link} to={`/event-details/${item.id}`}>
+                        View
+                    </Button>
                 </TableCell>
               </TableRow>
             ))}
@@ -142,7 +165,7 @@ const ManageEvents = () => {
               type="text"
               fullWidth
               value={currentEvent.description}
-              name="title"
+              name="description"
               onChange={onValueChange} />
 
           <TextField
@@ -154,13 +177,6 @@ const ManageEvents = () => {
               value={currentEvent.eventDateTime}
               name="eventDateTime"
               onChange={onValueChange} />
-
-            {/*<DateTimePicker*/}
-            {/*    label="Event Date Time"*/}
-            {/*    value={currentEvent.eventDateTime}*/}
-            {/*    onChange={handleDateChange}*/}
-            {/*    renderInput={(params) => <TextField {...params} fullWidth margin="dense" />}*/}
-            {/*/>*/}
 
         </DialogContent>
         <DialogActions>

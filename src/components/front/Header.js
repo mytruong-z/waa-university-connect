@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, Button, IconButton, Menu, MenuItem } from '@mui/material';
 import { Link } from 'react-router-dom';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import {useAuth} from "../../context/authContext";
+import { useNavigate } from 'react-router-dom';
+
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-
+  const { logout } = useAuth();
+  const navigate = useNavigate();
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -15,7 +19,14 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    console.log('Logout');
+    // Clear token from local storage
+    localStorage.removeItem('token');
+
+    // Call context logout method to update auth state
+    logout();
+
+    // Redirect to login page
+    navigate('/login');
   };
 
   return (
