@@ -1,6 +1,6 @@
 import React from 'react';
-import { List, ListItem, ListItemIcon, ListItemText, Drawer, Toolbar, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { List, ListItem, ListItemIcon, ListItemText, Drawer, Toolbar, Typography, Divider } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import ForumIcon from '@mui/icons-material/Forum';
@@ -9,8 +9,18 @@ import EventIcon from '@mui/icons-material/Event';
 import ThreadIcon from '@mui/icons-material/Article';
 import SchoolIcon from '@mui/icons-material/School';
 import MoodIcon from '@mui/icons-material/Mood';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useAuth } from '../../context/authContext';
 
 const Sidebar = () => {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate('/admin/login');
+    logout();
+  };
+
   return (
     <Drawer
       variant="permanent"
@@ -25,7 +35,7 @@ const Sidebar = () => {
           Admin Dashboard
         </Typography>
       </Toolbar>
-      <div>
+      <div style={{position: 'relative', height: '100%'}}>
         <List>
           {[
             { text: 'Dashboard', icon: <DashboardIcon />, path: '/admin' },
@@ -42,6 +52,14 @@ const Sidebar = () => {
               <ListItemText primary={item.text} />
             </ListItem>
           ))}
+
+        </List>
+        <Divider />
+        <List sx={{position: 'absolute', bottom: 0, width: '100%'}}>
+          <ListItem button key="Logout" onClick={handleLogout}>
+            <ListItemIcon sx={{ color: '#fff' }}><LogoutIcon /></ListItemIcon>
+            <ListItemText primary="Logout" />
+          </ListItem>
         </List>
       </div>
     </Drawer>
